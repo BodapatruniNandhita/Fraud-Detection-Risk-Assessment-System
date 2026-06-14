@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report
 
 # Load dataset
 df = pd.read_csv("data/creditcard.csv")
@@ -29,3 +31,19 @@ plt.xlabel("Class")
 plt.ylabel("Count")
 
 plt.show()
+
+X = df.drop("Class", axis=1)
+y = df["Class"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42
+)
+model = RandomForestClassifier(
+    n_estimators=100,
+    random_state=42
+)
+
+model.fit(X_train, y_train)
