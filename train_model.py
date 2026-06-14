@@ -54,3 +54,9 @@ print(accuracy_score(y_test, y_pred))
 
 print("\nClassification Report:")
 print(classification_report(y_test, y_pred))
+
+import joblib
+
+joblib.dump(model, "models/fraud_model.pkl")
+
+print("Model Saved Successfully")

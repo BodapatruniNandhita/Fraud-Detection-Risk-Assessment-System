@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection & Risk Assessment System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="page-shell">
+        <section class="hero">
+            <p class="eyebrow">Fraud Detection & Risk Assessment System</p>
+            <h1>
+                <span class="hero-line hero-line-top">Professional Fraud Detection</span>
+                <span class="hero-line hero-line-mid">&amp; Risk Assessment</span>
+                <span class="hero-line hero-line-bottom">System</span>
+            </h1>
+            <p class="subtitle">Assess transaction risk using a simple rule-based engine built for fast review and clear decision-making.</p>
+        </section>
+
+        <section class="card">
+            <div class="card-header">
+                <div>
+                    <p class="card-kicker">Risk Assessment</p>
+                    <h2>Evaluate transaction signals</h2>
+                </div>
+                <div class="badge">Live scoring</div>
+            </div>
+
+            <form method="POST" class="risk-form" autocomplete="off">
+                <div class="field">
+                    <label for="amount">Transaction Amount</label>
+                    <input
+                        type="number"
+                        id="amount"
+                        name="amount"
+                        min="0"
+                        step="0.01"
+                        placeholder="Enter transaction amount"
+                        autocomplete="off"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="transaction_type">Transaction Type</label>
+                    <select id="transaction_type" name="transaction_type" required>
+                        <option value="Purchase" selected>Purchase</option>
+                        <option value="Transfer">Transfer</option>
+                        <option value="Withdrawal">Withdrawal</option>
+                        <option value="Payment">Payment</option>
+                        <option value="Refund">Refund</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="account_age">Customer Account Age</label>
+                    <select id="account_age" name="account_age" required>
+                        <option value="< 1 Month">&lt; 1 Month</option>
+                        <option value="1-12 Months" selected>1-12 Months</option>
+                        <option value="> 1 Year">&gt; 1 Year</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="new_device">New Device?</label>
+                    <select id="new_device" name="new_device" required>
+                        <option selected>No</option>
+                        <option>Yes</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="international">International Transaction?</label>
+                    <select id="international" name="international" required>
+                        <option selected>No</option>
+                        <option>Yes</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="multiple">Multiple Transactions Last Hour?</label>
+                    <select id="multiple" name="multiple" required>
+                        <option selected>No</option>
+                        <option>Yes</option>
+                    </select>
+                </div>
+
+                <button type="submit">Assess Risk</button>
+            </form>
+
+            {% if risk_score is not none %}
+            <div class="result result-{{ risk_class }}">
+                <p class="result-label">Assessment Result</p>
+                <h3>{{ risk_level }}</h3>
+                <div class="risk-score">{{ risk_score }}<span>/100</span></div>
+                <p class="result-meta">Transaction Type: {{ transaction_type }}</p>
+                <p class="result-meta">Account Age: {{ account_age }}</p>
+                <div class="recommendation">
+                    <span>Recommendation</span>
+                    <strong>{{ recommendation }}</strong>
+                </div>
+            </div>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>
