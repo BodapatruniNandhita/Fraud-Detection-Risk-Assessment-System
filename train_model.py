@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report,accuracy_score
 
 # Load dataset
 df = pd.read_csv("data/creditcard.csv")
@@ -30,8 +30,7 @@ plt.title("Fraud vs Genuine Transactions")
 plt.xlabel("Class")
 plt.ylabel("Count")
 
-plt.show()
-
+plt.savefig("fraud_distribution.png")
 X = df.drop("Class", axis=1)
 y = df["Class"]
 
@@ -47,3 +46,11 @@ model = RandomForestClassifier(
 )
 
 model.fit(X_train, y_train)
+
+
+y_pred = model.predict(X_test)
+print("\nAccuracy:")
+print(accuracy_score(y_test, y_pred))
+
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
